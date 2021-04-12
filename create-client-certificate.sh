@@ -62,24 +62,25 @@ function createClientCert {
 }
 
 if [[ $# -eq 0 ]]; then
-echo "Provide script parameters. Use -h for details."
-elif [[ $1 == "-n" ]]; then
-echo "New certificate authority"
-createCertificateAuthority
-elif [[ $1 == "-e" && $2 != 0 && $3 != 0 ]]; then
-echo "Existing certificate authority"
-caFile=$2
-caKeyFile=$3
-vpnCompany=$(echo ${caFile} | cut -d'_' -f 1)
-echo "Using CA for ${vpnCompany}"
-elif [[ $1 == "-h" ]]; then
+		echo "Provide script parameters. Use -h for details."
+		exit
+	elif [[ $1 == "-n" ]]; then
+		echo "New certificate authority"
+		createCertificateAuthority
+	elif [[ $1 == "-e" && $2 != 0 && $3 != 0 ]]; then
+		echo "Existing certificate authority"
+		caFile=$2
+		caKeyFile=$3
+		vpnCompany=$(echo ${caFile} | cut -d'_' -f 1)
+		echo "Using CA for ${vpnCompany}"
+	elif [[ $1 == "-h" ]]; then
 echo -e "
-Option	Description
--n	New Certificate Authority
-	Usage: -n
--e	Existing Certificate authority
-	Usage: -e path/to/cert.pem path/to/key.pem
-	"
+	Option	Description
+	-n	Create ew Certificate Authority
+		Usage: -n
+	-e	Use existing Certificate authority
+		Usage: -e path/to/cert.pem path/to/key.pem
+		"
 fi
 
 createClientCert
